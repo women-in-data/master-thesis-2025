@@ -24,6 +24,16 @@
 ### Данные
 
 -  Основной датасет, используемый в анализе - датасет с [OZON E-CUP 2025](https://www.kaggle.com/datasets/islomka/ozon-ecup-2025-images-test)
+
+Из-за большого объема файлы данных не включены в репозиторий.
+
+### Файлы:
+- `ozon_train.csv` - текстовый датасет (181 МБ)
+- `image_embeddings.csv` - эмбеддинги изображений (85 МБ)
+
+### Ссылка для скачивания:
+**[Яндекс.Диск: данные для диплома](https://disk.yandex.ru/d/aw6epg3MNkQ9vw)**
+
 ### Исследовательский этап и прототипирование
 1.  **Анализ предметной области:**
     *   Детальный литературный обзор: `fake detection`, `multimodal models`, `cross-domain adaptation`, `e-commerce fraud`.
