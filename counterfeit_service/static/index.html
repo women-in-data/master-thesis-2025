@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Детектор контрафакта — Ozon</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #005bff;
+      color: #fff;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 8px rgba(0,91,255,.25);
+    }
+    header .logo {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+    header .subtitle {
+      font-size: 14px;
+      opacity: .85;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(0,0,0,.08);
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #1a1a1a;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      border: 1.5px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color .15s;
+      width: 100%;
+    }
+    input:focus, textarea:focus {
+      border-color: #005bff;
+    }
+    textarea { resize: vertical; min-height: 80px; }
+
+    /* Image upload area */
+    .upload-area {
+      border: 2px dashed #c5d5ff;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      position: relative;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .upload-area:hover { border-color: #005bff; background: #f0f5ff; }
+    .upload-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+    .upload-area .icon {
+      font-size: 40px;
+      color: #005bff;
+    }
+    .upload-area p { font-size: 14px; color: #666; }
+    .upload-area .hint { font-size: 12px; color: #aaa; }
+
+    #preview {
+      max-width: 100%;
+      max-height: 220px;
+      border-radius: 8px;
+      display: none;
+      object-fit: contain;
+    }
+
+    .btn {
+      background: #005bff;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+      transition: background .15s, transform .1s;
+    }
+    .btn:hover { background: #0047cc; }
+    .btn:active { transform: scale(.98); }
+    .btn:disabled { background: #a0b8ff; cursor: not-allowed; }
+
+    /* Result card */
+    #result { display: none; }
+
+    .verdict {
+      text-align: center;
+      padding: 24px 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .verdict.counterfeit { background: #fff0f0; border: 2px solid #ff3b30; }
+    .verdict.original    { background: #f0fff4; border: 2px solid #34c759; }
+
+    .verdict .label {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+    .verdict.counterfeit .label { color: #c00; }
+    .verdict.original    .label { color: #1a7a2e; }
+
+    .verdict .prob {
+      font-size: 15px;
+      margin-top: 8px;
+      color: #555;
+    }
+
+    .signals {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .signal-card {
+      background: #f8f9ff;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .signal-card .sig-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 8px;
+    }
+    .signal-card .sig-val {
+      font-size: 24px;
+      font-weight: 800;
+      color: #005bff;
+    }
+    .signal-card .sig-bar-wrap {
+      margin-top: 8px;
+      background: #e0e8ff;
+      border-radius: 4px;
+      height: 6px;
+      overflow: hidden;
+    }
+    .signal-card .sig-bar {
+      height: 100%;
+      border-radius: 4px;
+      background: #005bff;
+      transition: width .5s ease;
+    }
+
+    .error-msg {
+      background: #fff0f0;
+      border: 1.5px solid #ffb3b3;
+      border-radius: 10px;
+      padding: 16px;
+      color: #c00;
+      font-size: 14px;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 20px; height: 20px;
+      border: 3px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .signals { grid-template-columns: 1fr; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">ozon</div>
+  <div class="subtitle">Система детекции контрафактных товаров</div>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>Проверить товар</h2>
+    <form id="checkForm">
+
+      <!-- Photo upload -->
+      <div class="form-group full" style="margin-bottom:20px">
+        <label>Фото товара *</label>
+        <div class="upload-area" id="uploadArea">
+          <input type="file" name="image" id="imageInput" accept="image/*" required>
+          <img id="preview" alt="preview">
+          <div id="uploadPlaceholder">
+            <div class="icon">📷</div>
+            <p>Нажмите или перетащите фото</p>
+            <span class="hint">JPG, PNG, WEBP — до 10 МБ</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group full">
+          <label for="name">Название товара</label>
+          <input type="text" id="name" name="name" placeholder="Например: Кроссовки Nike Air Max 90">
+        </div>
+
+        <div class="form-group full">
+          <label for="description">Описание</label>
+          <textarea id="description" name="description" placeholder="Описание товара из карточки..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="brand">Бренд</label>
+          <input type="text" id="brand" name="brand" placeholder="Nike">
+        </div>
+
+        <div class="form-group">
+          <label for="category">Категория (CommercialTypeName4)</label>
+          <input type="text" id="category" name="category" placeholder="Кроссовки">
+        </div>
+
+        <div class="form-group">
+          <label for="price">Цена (₽)</label>
+          <input type="number" id="price" name="price" value="0" min="0" step="1">
+        </div>
+
+        <div class="form-group">
+          <label for="item_time_alive">Дней на площадке</label>
+          <input type="number" id="item_time_alive" name="item_time_alive" value="0" min="0" step="1">
+        </div>
+
+        <div class="form-group">
+          <label for="item_count_sales30">Продажи за 30 дней</label>
+          <input type="number" id="item_count_sales30" name="item_count_sales30" value="0" min="0" step="1">
+        </div>
+
+        <div class="form-group">
+          <label for="item_count_returns30">Возвраты за 30 дней</label>
+          <input type="number" id="item_count_returns30" name="item_count_returns30" value="0" min="0" step="1">
+        </div>
+
+        <div class="form-group">
+          <label for="seller_time_alive">Возраст продавца (дни)</label>
+          <input type="number" id="seller_time_alive" name="seller_time_alive" value="0" min="0" step="1">
+        </div>
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">Проверить товар</button>
+    </form>
+  </div>
+
+  <!-- Result -->
+  <div class="card" id="result">
+    <div id="resultContent"></div>
+  </div>
+
+</div>
+
+<script>
+  // Image preview
+  const imageInput = document.getElementById('imageInput');
+  const preview = document.getElementById('preview');
+  const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+
+  imageInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+      uploadPlaceholder.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Form submit
+  document.getElementById('checkForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('submitBtn');
+    const resultCard = document.getElementById('result');
+    const resultContent = document.getElementById('resultContent');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Анализирую...';
+    resultCard.style.display = 'none';
+
+    const formData = new FormData(this);
+
+    try {
+      const resp = await fetch('/predict', { method: 'POST', body: formData });
+      const data = await resp.json();
+
+      if (!resp.ok) {
+        throw new Error(data.detail || `HTTP ${resp.status}`);
+      }
+
+      const isCounterfeit = data.is_counterfeit;
+      const prob = (data.probability * 100).toFixed(1);
+      const s = data.signals;
+
+      resultContent.innerHTML = `
+        <div class="verdict ${isCounterfeit ? 'counterfeit' : 'original'}">
+          <div class="label">${isCounterfeit ? '🚨 КОНТРАФАКТ' : '✅ ОРИГИНАЛ'}</div>
+          <div class="prob">Вероятность контрафакта: <strong>${prob}%</strong></div>
+        </div>
+
+        <h2 style="margin-bottom:12px">Сигналы модальностей</h2>
+        <div class="signals">
+          ${signalCard('Мультимодальный', s.multimodal_score)}
+          ${signalCard('Изображение', s.image_signal)}
+          ${signalCard('Текст', s.text_signal)}
+        </div>
+      `;
+
+      resultCard.style.display = 'block';
+      resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    } catch (err) {
+      resultContent.innerHTML = `<div class="error-msg">Ошибка: ${err.message}</div>`;
+      resultCard.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Проверить товар';
+    }
+  });
+
+  function signalCard(label, score) {
+    const pct = (score * 100).toFixed(1);
+    const width = Math.round(score * 100);
+    return `
+      <div class="signal-card">
+        <div class="sig-label">${label}</div>
+        <div class="sig-val">${pct}%</div>
+        <div class="sig-bar-wrap">
+          <div class="sig-bar" style="width:${width}%"></div>
+        </div>
+      </div>`;
+  }
+</script>
+</body>
+</html>

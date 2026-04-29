@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  counterfeit-api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount the artifacts directory from host into the container.
+      # Put your model files here: catboost_model.cbm, img_scaler.pkl,
+      # feature_cols.pkl, cat_cols.pkl, and optionally d2v_model.pkl
+      - ./artifacts:/app/artifacts:ro
+    environment:
+      ARTIFACTS_DIR: /app/artifacts
+      COUNTERFEIT_THRESHOLD: "0.5"
+    restart: unless-stopped
+    # CPU-only — no GPU resources needed for demo
