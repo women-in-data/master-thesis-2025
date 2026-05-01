@@ -22,9 +22,7 @@ print('CLIP cached')"
 # Copy application code
 COPY app/ ./app/
 COPY static/ ./static/
-
-# artifacts/ is mounted as a volume — not copied into image
-# so model files stay outside the image and can be updated without rebuild
+COPY artifacts/ ./artifacts/
 
 ENV ARTIFACTS_DIR=/app/artifacts
 ENV COUNTERFEIT_THRESHOLD=0.5
