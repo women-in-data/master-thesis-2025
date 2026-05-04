@@ -1,0 +1,42 @@
+# Repository Meta
+
+## System Specifications
+
+**Hardware:**
+- CPU: Apple M3 Pro
+- Cores (physical): 11
+- Cores (logical): 11
+- RAM: 18.0 GB
+- Architecture: arm64
+
+**OS:**
+- ProductName:		macOS
+- ProductVersion:		15.6.1
+- BuildVersion:		24G90
+
+**Python:**
+- Python 3.13.5
+- pandas: 3.0.1
+- numpy: 2.4.2
+- scikit-learn: 1.8.0
+- catboost: 1.2.10
+- lightgbm: 4.6.0
+- imblearn: 0.14.1
+
+## Git Statistics
+
+- Branch: main
+- Commits total: 47
+- Unique author emails: 5
+- First commit: 2025-12-21 21:27:17 +0300 Create README.md
+- Last commit:  2026-05-03 17:57:50 +0500 Revert "Delete notebooks/02_eda_text_extended.ipynb"
+
+**Per-author commits:**
+
+```
+  24 Sofya Krasovskaya
+   8 sagittius
+   8 dianamkoian
+   6 Albina Bakhtiarova
+   1 Sagittius
+```
