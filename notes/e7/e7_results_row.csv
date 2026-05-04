@@ -1,0 +1,2 @@
+experiment,train_size,roc_auc,pr_auc,recall_at_p90_oracle,delta_r_at_p90_vs_e0_canon
+E7_text_e5small_PCA25,135626,0.9285266379840793,0.6659850646566832,0.3299019607843137,0.15780196078431372

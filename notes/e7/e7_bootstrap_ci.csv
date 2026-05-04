@@ -1,0 +1,2 @@
+experiment,pr_auc_mean,pr_auc_ci_low,pr_auc_ci_high,recall_p90_mean,recall_p90_ci_low,recall_p90_ci_high,n_iter_effective
+E7_text_e5small_PCA25,0.6659410342514259,0.6453698894087417,0.6867996303362465,0.31967469378854263,0.2557075630767344,0.35721299075088353,1000
