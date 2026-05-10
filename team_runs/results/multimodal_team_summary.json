@@ -1,0 +1,39 @@
+{
+  "catboost_base": {
+    "iterations": 1000,
+    "depth": 6,
+    "learning_rate": 0.05,
+    "eval_metric": "AUC",
+    "scale_pos_weight": 15.395892351274787,
+    "early_stopping_rounds": 50,
+    "random_seed": 42
+  },
+  "E5_team": {
+    "name": "E5_team",
+    "roc_auc": 0.9507978745617077,
+    "pr_auc": 0.7188575090524375,
+    "r_at_p90": 0.09498169287098858,
+    "best_iteration": 495,
+    "fit_seconds": 96.6,
+    "pca_explained_variance": 0.5737836956977844,
+    "missing_emb_test": 0.04756034925526451
+  },
+  "E7_team": {
+    "name": "E7_team",
+    "roc_auc": 0.9521428683790292,
+    "pr_auc": 0.7223890959722253,
+    "r_at_p90": 0.09153564505707516,
+    "best_iteration": 729,
+    "fit_seconds": 138.5,
+    "pca_explained_variance": 0.42905333638191223,
+    "missing_emb_test": 0.0
+  },
+  "Fusion_team": {
+    "name": "Fusion_team",
+    "roc_auc": 0.9522044610278503,
+    "pr_auc": 0.7283718879869716,
+    "r_at_p90": 0.10768899418479431,
+    "best_iteration": 429,
+    "fit_seconds": 90.8
+  }
+}

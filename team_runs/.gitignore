@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+catboost_info/
+.DS_Store
+.ipynb_checkpoints/
+
+# Repo-root .gitignore globally ignores *.csv and *.parquet.
+# Re-include the small CSV with bootstrap results for reproducibility:
+!results/*.csv
+
+# Large embedding artifact stays out of git (436 MB, regeneratable in ~15 min on Colab T4
+# via team_runs/notebooks/03_multimodal_colab.ipynb step "Stage 2.5"):
+embeddings/*.parquet

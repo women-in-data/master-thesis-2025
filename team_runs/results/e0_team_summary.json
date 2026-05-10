@@ -1,0 +1,45 @@
+{
+  "catboost_base": {
+    "iterations": 1000,
+    "depth": 6,
+    "learning_rate": 0.05,
+    "eval_metric": "AUC",
+    "scale_pos_weight": 15.395892351274787,
+    "early_stopping_rounds": 50,
+    "random_seed": 42
+  },
+  "E0_team_full": {
+    "name": "E0_team_full",
+    "roc_auc": 0.9365810326022797,
+    "pr_auc": 0.6812348556293993,
+    "r_at_p90": 0.06913633426663796,
+    "best_iteration": 300,
+    "converged": true,
+    "fit_seconds": 11.2,
+    "n_features": 42,
+    "cat_features": [
+      "brand_name",
+      "description",
+      "name_rus",
+      "CommercialTypeName4"
+    ]
+  },
+  "E0_team_clean": {
+    "name": "E0_team_clean",
+    "roc_auc": 0.9049868919138462,
+    "pr_auc": 0.5301273145500932,
+    "r_at_p90": 0.002153779883695886,
+    "best_iteration": 293,
+    "converged": true,
+    "fit_seconds": 5.3,
+    "n_features": 38,
+    "cat_features": [
+      "CommercialTypeName4"
+    ]
+  },
+  "delta_full_minus_clean": {
+    "r_at_p90": 0.06698255438294207,
+    "pr_auc": 0.15110754107930613,
+    "roc_auc": 0.03159414068843347
+  }
+}
