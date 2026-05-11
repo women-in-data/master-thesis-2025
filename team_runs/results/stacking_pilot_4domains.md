@@ -66,7 +66,7 @@ The two files are the same model in spirit (high correlation), but the precision
 | **diana (real estate)** | 0.9484 | **0.7375** | **0.1154** |
 | albina | **0.9545** | 0.7084 | 0.0276 |
 
-With the corrected file, **Diana is now the strongest single model on PR-AUC (0.7375)**, narrowly above Sonya's fusion (0.7284). Sonya retains a slight lead on R@P≥0.9 over Diana (0.1077 vs 0.1154 — Diana actually higher; revisit below). Albina leads on ROC-AUC.
+With the corrected file, **Diana is now the strongest single model on PR-AUC (0.7375)** and on **R@P≥0.9 (0.1154)**, both narrowly above Sonya's fusion (0.7284 and 0.1077 respectively). Albina leads singletons on ROC-AUC (0.9545).
 
 Note: among singletons, the leader on each metric is now:
 - **PR-AUC:** Diana 0.7375 (Sonya 0.7284 a close second)
