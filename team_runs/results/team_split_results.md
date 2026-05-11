@@ -35,7 +35,7 @@ CatBoostClassifier(
 )
 ```
 
-**Disclaimer.** This is identical to the FinTech-branch E0_canon config (`fintech_approaches/fintech_experiment.ipynb` cell 5), **not** the team baseline config (`notebooks/baseline.ipynb` cell 20: `iterations=700`, no early stopping). The choice is intentional: by holding the model identical and only varying the feature/embedding axis, the deltas between team_runs experiments are interpretable as "the effect of features", not "features mixed with hyper-params". The disadvantage — these team_runs numbers are not directly comparable to whatever the team will eventually re-run on their own with their config; for that, one would need a separate `E0_team_native` row (not produced here).
+**Disclaimer.** This is identical to the FinTech-branch E0_canon config (`fintech_approaches/fintech_experiment.ipynb` cell 5). The choice is intentional: by holding the model identical and only varying the feature/embedding axis, the deltas between team_runs experiments are interpretable as "the effect of features", not "features mixed with hyper-params". For the downstream cross-domain stacking in Chapter 5, the per-domain hyperparameters do not matter — the meta-classifier consumes probability arrays of shape `(58410,)`, not domain-model hyperparameters.
 
 ---
 
