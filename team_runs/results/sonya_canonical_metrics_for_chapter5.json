@@ -1,0 +1,77 @@
+{
+  "_purpose": "Canonical reference for Sonya's models on team_test, for use in shared Chapter 5",
+  "_team_test_y": {
+    "file": "team_runs/splits/y_test.npy",
+    "file_md5": "167eb65ef4fdb8c75719b041f2e541ab",
+    "n": 58410,
+    "positives": 4643,
+    "base_rate": 0.0795
+  },
+  "models": {
+    "e0_team_clean": {
+      "file": "team_runs/proba/test_proba_e0_team_clean.npy",
+      "file_md5": "e71c8e5cb4f37edac6f56993c71ba7c4",
+      "shape": [
+        58410
+      ],
+      "dtype_on_disk": "float32",
+      "metrics": {
+        "ROC_AUC": 0.905,
+        "PR_AUC": 0.5301,
+        "Recall_at_P_geq_0.9": 0.0022
+      }
+    },
+    "e0_team_full": {
+      "file": "team_runs/proba/test_proba_e0_team_full.npy",
+      "file_md5": "f2c9e53d059e6a30332ad7e091b48866",
+      "shape": [
+        58410
+      ],
+      "dtype_on_disk": "float32",
+      "metrics": {
+        "ROC_AUC": 0.9366,
+        "PR_AUC": 0.6812,
+        "Recall_at_P_geq_0.9": 0.0691
+      }
+    },
+    "e5_team": {
+      "file": "team_runs/proba/test_proba_e5_team.npy",
+      "file_md5": "d355af44d97ec8df1e95e29453729209",
+      "shape": [
+        58410
+      ],
+      "dtype_on_disk": "float32",
+      "metrics": {
+        "ROC_AUC": 0.9508,
+        "PR_AUC": 0.7189,
+        "Recall_at_P_geq_0.9": 0.095
+      }
+    },
+    "e7_team": {
+      "file": "team_runs/proba/test_proba_e7_team.npy",
+      "file_md5": "79e64fe238d2c3967074da1302f9d2ce",
+      "shape": [
+        58410
+      ],
+      "dtype_on_disk": "float32",
+      "metrics": {
+        "ROC_AUC": 0.9521,
+        "PR_AUC": 0.7224,
+        "Recall_at_P_geq_0.9": 0.0915
+      }
+    },
+    "fusion_team": {
+      "file": "team_runs/proba/test_proba_fusion_team.npy",
+      "file_md5": "c9c77df61c80d05a16a700bf1823dfe6",
+      "shape": [
+        58410
+      ],
+      "dtype_on_disk": "float32",
+      "metrics": {
+        "ROC_AUC": 0.9522,
+        "PR_AUC": 0.7284,
+        "Recall_at_P_geq_0.9": 0.1077
+      }
+    }
+  }
+}
