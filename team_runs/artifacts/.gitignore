@@ -1,0 +1,5 @@
+# Re-include FT-MFF inference artifacts (PCA objects).
+# Parent .gitignore at repo root globally ignores *.pkl — but PCA fits ARE
+# the model and must travel with ftmff_catboost.cbm for inference.
+!ftmff_pca_clip.pkl
+!ftmff_pca_text.pkl
