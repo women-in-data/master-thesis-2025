@@ -37,3 +37,4 @@ notes/repository_full_inventory.md
 !fintech_approaches/random_split_check.csv
 !fintech_approaches/secondary_baselines.csv
 !notes/**/*.csv
+!notebooks/text_eda_results.csv
